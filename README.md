@@ -20,18 +20,21 @@ python -m venv venv
 venv\Scripts\activate
 ```
 
-## Task
+## Usage
 
-Given a text file, count the occurrence of each unique word in the file.
+### Basic Usage
 
-### Example
+```bash
+python main.py <filename>
+```
 
-A file containing the string "Go do that thing that you do so well" should find these counts:
+### Command Line Arguments
 
-- **1**: Go
-- **2**: do
-- **2**: that
-- **1**: thing
-- **1**: you
-- **1**: so
-- **1**: well
+| Argument           | Type       | Default  | Description                                                                                |
+| ------------------ | ---------- | -------- | ------------------------------------------------------------------------------------------ |
+| `file`             | positional | required | Path to text file to analyze                                                               |
+| `--k`              | int        | None     | top-k words or ≤0 to return all                                                            |
+| `--case-sensitive` | flag       | False    | default to case-insensitive                                                                |
+| `--large`          | flag       | False    | line-by-line for large inputs, non memory leak                                             |
+| `--method`         | choice     | "bucket" | bucket-based O(n) selection or super pythonic Counter.most_common, almost like cheating XD |
+| `--print-limit`    | int        | None     | n results to print                                                                         |

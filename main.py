@@ -57,3 +57,15 @@ class WordFrequencyCounter:
     def top_pythonic(self, file_path: str, k: int) -> list[tuple[str, int]]:
         counter = self.count_from_file(file_path)
         return counter.most_common(k)
+
+
+def top_words_from_file(file_path: str, k: int | None = None, case_sensitive: bool = False) -> list[tuple[str, int]]:
+    return WordFrequencyCounter(case_sensitive=case_sensitive).top_from_file(file_path, k=k, large=False)
+
+
+def top_words_from_large_file(file_path: str, k: int | None = None, case_sensitive: bool = False) -> list[tuple[str, int]]:
+    return WordFrequencyCounter(case_sensitive=case_sensitive).top_from_file(file_path, k=k, large=True)
+
+
+def top_words_pythonic(file_path: str, k: int, case_sensitive: bool = False) -> list[tuple[str, int]]:
+    return WordFrequencyCounter(case_sensitive=case_sensitive).top_pythonic(file_path, k)

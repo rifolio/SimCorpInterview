@@ -1,5 +1,7 @@
 # SimCorp - Word Counter
 
+<img src="https://img.shields.io/badge/-Python-blue?style=for-the-badge">
+
 Solution for second round interview.
 
 ## Task
@@ -54,3 +56,26 @@ python main.py <filename>
 | `--large`          | flag       | False    | line-by-line for large inputs, non memory leak                                             |
 | `--method`         | choice     | "bucket" | bucket-based O(n) selection or super pythonic Counter.most_common, almost like cheating XD |
 | `--print-limit`    | int        | None     | n results to print                                                                         |
+
+## When to Use Each Option
+
+### `--case-sensitive`
+
+- **Use when**: need to distinguish between "Word", "word", and "WORD"
+- **Skip when**: want to count "The" and "the" as the same word
+
+### `--large`
+
+- **Use when**: files larger than available RAM
+- **Skip when**: small files (<100MB)
+
+### `--method`
+
+- **"bucket"** (default):
+  - Use for: most cases, especially with top-k selection --> O(n) time complexity, memory efficient
+- **"pythonic"**:
+  - Use for: specifically need Counter.most_common(), on-eliner
+
+### `--k`
+
+- **Specify a number**: only the top N most frequent words

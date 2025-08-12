@@ -1,0 +1,53 @@
+name: Unit Tests
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: [3.8, 3.9, "3.10", "3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pytest-cov
+
+      - name: Run unit tests
+        run: |
+          python -m pytest test_word_counter.py -v --cov=main --cov-report=term-missing
+
+      - name: Run tests with unittest (alternative)
+        run: |
+          python -m unittest test_word_counter.py -v
+
+      - name: Test the specific example
+        run: |
+          echo "Testing the specific example: 'Go do that thing that you do so well'"
+          python -c "
+          from main import WordFrequencyCounter
+          counter = WordFrequencyCounter()
+          test_text = 'Go do that thing that you do so well'
+          with open('test_example.txt', 'w') as f:
+              f.write(test_text)
+          result = counter.count_from_file('test_example.txt')
+          expected = {'go': 1, 'do': 2, 'that': 2, 'thing': 1, 'you': 1, 'so': 1, 'well': 1}
+          print('Expected:', expected)
+          print('Actual:', dict(result))
+          assert result == expected, f'Expected {expected}, got {dict(result)}'
+          print('✓ Test passed! All word counts match expected values.')
+          "
